@@ -1,6 +1,6 @@
 class SearchesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_search, only: [ :show ]
+  before_action :set_search, only: [ :show, :destroy ]
 
   def index
     @searches = current_user.searches
@@ -18,6 +18,11 @@ class SearchesController < ApplicationController
       @searches = current_user.searches
       render :index, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @search.destroy
+    redirect_to searches_path
   end
 
   private
