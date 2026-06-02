@@ -1,6 +1,6 @@
 class SearchesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_search, only: [ :show, :destroy ]
+  before_action :set_search, only: [ :show, :update, :destroy ]
 
   def index
     @searches = current_user.searches
@@ -13,6 +13,15 @@ class SearchesController < ApplicationController
     @search = current_user.searches.build(search_params)
 
     if @search.save
+      redirect_to searches_path
+    else
+      @searches = current_user.searches
+      render :index, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @search.update(search_params)
       redirect_to searches_path
     else
       @searches = current_user.searches
