@@ -1,38 +1,90 @@
-<div class="min-h-screen bg-gray-50 text-gray-900">
-  
-  <main>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="flex items-center justify-between mb-10">
-        <h2 class="text-4xl font-bold">My Searches</h2>
+<div data-controller="modal">
+	<div class="min-h-screen bg-gray-50 text-gray-900">
+		<main>
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+				<div class="flex items-center justify-between mb-10">
+					<h2 class="text-4xl font-bold">My Searches</h2>
 
-        <%= link_to new_search_path,
-            class: "flex items-center gap-3 rounded-lg bg-blue-700 px-6 py-4 text-xl font-medium text-white hover:bg-blue-500" do %>
-            <span class="text-2xl leading-none">+</span>
-            <span>New Search</span>
-        <% end %>
-      </div>
+					<button type="button"
+									data-action="click->modal#open"
+									class="flex items-center gap-3 rounded-lg bg-blue-700 px-6 py-4 text-xl font-medium text-white hover:bg-blue-500 cursor-pointer">
+						<span class="text-2xl leading-none">+</span>
+						<span>New Search</span>
+					</button>
+				</div>
 
-      <div class="space-y-5">
-        <% @searches.each do |search| %>
-            <a href="#" class="block rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm hover:shadow-md transition">
-            <div class="flex items-center justify-between">
-                <div>
-                <h3 class="text-xl font-medium"><%= search.name %></h3>
+				<div class="space-y-5">
+					<% @searches.each do |search| %>
+							<a href="#" class="block rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm hover:shadow-md transition">
+							<div class="flex items-center justify-between">
+									<div>
+									<h3 class="text-xl font-medium"><%= search.name %></h3>
 
-                <div class="flex items-center gap-4 text-xl text-gray-500">
-                    <span>2 open</span>
-                    <span>·</span>
-                    <span>1 closed</span>
-                    <span>·</span>
-                    <span>Updated <%= search.updated_at.strftime("%Y-%m-%d") %></span>
-                </div>
-                </div>
+									<div class="flex items-center gap-4 text-xl text-gray-500">
+											<span>2 open</span>
+											<span>·</span>
+											<span>1 closed</span>
+											<span>·</span>
+											<span>Updated <%= search.updated_at.strftime("%Y-%m-%d") %></span>
+									</div>
+									</div>
 
-                <span class="text-4xl text-gray-500">›</span>
-            </div>
-            </a>
-        <% end %>
-      </div>
-    </div>
-  </main>
+									<span class="text-4xl text-gray-500">›</span>
+							</div>
+							</a>
+					<% end %>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<div data-modal-target="window"
+     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+		<div class="w-full max-w-md rounded-lg bg-white shadow-lg border border-gray-200 p-6">
+
+			<div class="flex items-center justify-between mb-6">
+				<h2 class="text-xl font-semibold">Create New Search</h2>
+
+				<button type="button"
+								data-action="click->modal#close"
+								class="text-gray-500 hover:text-gray-900 cursor-pointer">
+					✕
+				</button>
+			</div>
+
+			<%= form_with model: Search.new, url: searches_path, class: "space-y-4" do |f| %>
+
+				<div>
+					<%= f.label :name,
+								"Search Name",
+								class: "block text-sm font-medium mb-2" %>
+					
+					<% if @search&.errors&.any? %>
+						<div class="mb-4 rounded-md bg-red-50 border border-red-200 p-3">
+							<% @search.errors.full_messages.each do |message| %>
+								<p class="text-red-600 text-sm"><%= message %></p>
+							<% end %>
+						</div>
+					<% end %>
+								
+					<%= f.text_field :name,
+								required: true,
+								placeholder: "e.g. Manchester 2-bed search",
+								class: "w-full rounded-md border border-gray-300 px-3 py-2" %>
+				</div>
+
+				<div class="flex justify-end gap-3 pt-4">
+					<button type="button"
+									data-action="click->modal#close"
+									class="rounded-md border border-gray-300 px-4 py-2 hover:bg-gray-50 cursor-pointer">
+						Cancel
+					</button>
+
+					<%= f.submit "Create Search",
+								class: "rounded-md bg-blue-700 px-4 py-2 text-white hover:bg-blue-500 cursor-pointer" %>
+				</div>
+
+			<% end %>
+		</div>
+	</div>
 </div>
