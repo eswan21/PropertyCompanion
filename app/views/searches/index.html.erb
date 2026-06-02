@@ -15,23 +15,23 @@
 
 				<div class="space-y-5">
 					<% @searches.each do |search| %>
-							<a href="#" class="block rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm hover:shadow-md transition">
-							<div class="flex items-center justify-between">
-									<div>
-									<h3 class="text-xl font-medium"><%= search.name %></h3>
+							<%= link_to search_path(search), class: "block rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm hover:shadow-md transition" do %>
+								<div class="flex items-center justify-between">
+										<div>
+										<h3 class="text-xl font-medium"><%= search.name %></h3>
 
-									<div class="flex items-center gap-4 text-xl text-gray-500">
-											<span>2 open</span>
-											<span>·</span>
-											<span>1 closed</span>
-											<span>·</span>
-											<span>Updated <%= search.updated_at.strftime("%Y-%m-%d") %></span>
-									</div>
-									</div>
+										<div class="flex items-center gap-4 text-xl text-gray-500">
+												<span>2 open</span>
+												<span>·</span>
+												<span>1 closed</span>
+												<span>·</span>
+												<span>Updated <%= search.updated_at.strftime("%Y-%m-%d") %></span>
+										</div>
+										</div>
 
-									<span class="text-4xl text-gray-500">›</span>
-							</div>
-							</a>
+										<span class="text-4xl text-gray-500">›</span>
+								</div>
+							<% end %>
 					<% end %>
 				</div>
 			</div>
