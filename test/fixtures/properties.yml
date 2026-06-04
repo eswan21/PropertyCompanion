@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  search: one
+  title: MyString
+  location: MyString
+  price_per_month: 1
+  personal_priority: 1
+  url: MyString
+  address: MyString
+  postcode: MyString
+  council_tax_band: MyString
+  epc_rating: MyString
+  disadvantages: MyText
+  notes: MyText
+  open: false
+
+two:
+  search: two
+  title: MyString
+  location: MyString
+  price_per_month: 1
+  personal_priority: 1
+  url: MyString
+  address: MyString
+  postcode: MyString
+  council_tax_band: MyString
+  epc_rating: MyString
+  disadvantages: MyText
+  notes: MyText
+  open: false
