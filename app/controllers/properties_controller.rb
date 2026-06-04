@@ -1,0 +1,35 @@
+class PropertiesController < ApplicationController
+  def new
+      @search = Search.find(params[:search_id])
+      @property = @search.properties.build
+  end
+
+  def create
+      @search = Search.find(params[:search_id])
+      @property = @search.properties.build(property_params)
+
+      if @property.save
+      redirect_to @search
+      else
+      render :new, status: :unprocessable_entity
+      end
+  end
+
+  private
+
+  def property_params
+      params.require(:property).permit(
+      :title,
+      :location,
+      :price_per_month,
+      :personal_priority,
+      :url,
+      :address,
+      :postcode,
+      :council_tax_band,
+      :epc_rating,
+      :disadvantages,
+      :notes
+      )
+  end
+end
