@@ -75,8 +75,8 @@
                     <div class="flex items-center w-full">
                       <div class="flex-1 min-w-0">
                         <%= link_to property.title,
-                              "#",
-                              class: "font-medium text-blue-500 hover:text-blue-600 truncate block" %>
+                          search_property_path(@search, property),
+                          class: "font-medium text-blue-500 hover:text-blue-600 truncate block" %>
                       </div>
 
                       <div class="ml-3 shrink-0">

@@ -1,4 +1,10 @@
 class PropertiesController < ApplicationController
+  before_action :set_search
+  before_action :set_property, only: [:show]
+
+  def show
+  end  
+
   def new
       @search = Search.find(params[:search_id])
       @property = @search.properties.build
@@ -31,5 +37,13 @@ class PropertiesController < ApplicationController
       :disadvantages,
       :notes
       )
+  end
+
+  def set_search
+    @search = current_user.searches.find(params[:search_id])
+  end
+
+  def set_property
+    @property = @search.properties.find(params[:id])
   end
 end
