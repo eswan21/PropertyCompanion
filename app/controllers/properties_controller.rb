@@ -1,10 +1,10 @@
 class PropertiesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_search
-  before_action :set_property, only: [:show, :update, :destroy]
+  before_action :set_property, only: [ :show, :update, :destroy ]
 
   def show
-  end  
+  end
 
   def create
       @search = Search.find(params[:search_id])
