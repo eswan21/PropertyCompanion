@@ -6,11 +6,6 @@ class PropertiesController < ApplicationController
   def show
   end  
 
-  def new
-      @search = Search.find(params[:search_id])
-      @property = @search.properties.build
-  end
-
   def create
       @search = Search.find(params[:search_id])
       @property = @search.properties.build(property_params)

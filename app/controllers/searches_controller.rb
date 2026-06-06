@@ -8,6 +8,7 @@ class SearchesController < ApplicationController
 
   def show
     @properties = @search.properties.by_priority
+    @property = @search.properties.build
   end
 
   def create

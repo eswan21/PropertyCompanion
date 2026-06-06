@@ -25,10 +25,7 @@
             Share
           </button>
 
-          <%= link_to new_search_property_path(@search), class: "inline-flex items-center gap-2 rounded-lg bg-blue-700 px-4 py-2 text-white hover:bg-blue-500" do %>
-            <span>+</span>
-            <span>Add Property</span>
-          <% end %>
+          <%= render "properties/new_modal" %>
         </div>
       </div>
 
@@ -206,10 +203,7 @@
             Add your first property to this search.
           </p>
 
-          <%= link_to new_search_property_path(@search), class: "inline-flex items-center gap-2 rounded-lg bg-blue-700 px-4 py-2 text-white hover:bg-blue-500" do %>
-            <span>+</span>
-            <span>Add Property</span>
-          <% end %>
+          <%= render "properties/new_modal" %>
         </div>
       <% end %>
     </div>

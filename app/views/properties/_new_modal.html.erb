@@ -1,0 +1,22 @@
+<div data-controller="modal">
+  <button type="button" data-action="click->modal#open" class="inline-flex items-center gap-2 rounded-lg bg-blue-700 px-4 py-2 text-white hover:bg-blue-500">
+    <span>+</span>
+    <span>Add Property</span>
+  </button>
+
+  <div data-modal-target="window" class="hidden fixed inset-0 z-50">
+    <div class="fixed inset-0 bg-black/40" data-action="click->modal#close"></div>
+
+    <div class="relative mx-auto mt-10 max-h-[90vh] max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 text-left">
+      <button type="button"
+              data-action="click->modal#close"
+              class="absolute right-4 top-4">
+          ×
+      </button>
+
+      <h1 class="text-2xl font-semibold text-gray-900">Add Property</h1>
+      <%= render "properties/form" %>
+
+    </div>
+  </div>
+</div>
