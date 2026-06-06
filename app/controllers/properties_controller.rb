@@ -1,6 +1,7 @@
 class PropertiesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_search
-  before_action :set_property, only: [:show]
+  before_action :set_property, only: [:show, :edit, :update]
 
   def show
   end  
@@ -19,6 +20,17 @@ class PropertiesController < ApplicationController
       else
       render :new, status: :unprocessable_entity
       end
+  end
+
+  def edit
+  end
+
+  def update
+    if @property.update(property_params)
+      redirect_to search_property_path(@search, @property)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
