@@ -1,7 +1,7 @@
 class PropertiesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_search
-  before_action :set_property, only: [:show, :edit, :update]
+  before_action :set_property, only: [:show, :edit, :update, :destroy]
 
   def show
   end  
@@ -31,6 +31,11 @@ class PropertiesController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @property.destroy
+    redirect_to search_path(@search)
   end
 
   private
