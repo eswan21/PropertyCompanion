@@ -1,0 +1,185 @@
+<div class="min-h-screen bg-gray-50 text-gray-900">
+  <main class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mb-4">
+      <%= link_to search_path(@search),
+          class: "inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900" do %>
+        <span>←</span>
+        <span><%= @search.name %></span>
+      <% end %>
+    </div>
+
+    <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+      <div>
+        <h1 class="text-2xl font-semibold text-gray-900">
+          <%= @property.title %>
+        </h1>
+
+        <div class="mt-2 flex items-center gap-2">
+          <% if @property.open? %>
+            <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+              Open
+            </span>
+          <% else %>
+            <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+              Closed
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-end gap-3">
+        <div class="flex items-center gap-2 whitespace-nowrap">
+          
+          <%= render "edit_modal" %>
+
+          <button type="button"
+            class="whitespace-nowrap flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" 
+                  width="15" 
+                  height="15" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  stroke-width="2" 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  class="lucide lucide-calendar-plus-icon lucide-calendar-plus">
+                  <path d="M16 19h6"/><path d="M16 2v4"/><path d="M19 16v6"/>
+                  <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"/>
+                  <path d="M3 10h18"/><path d="M8 2v4"/>
+              </svg>
+              <span>Add Event</span>
+          </button>
+
+          <button type="button"
+            class="whitespace-nowrap flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                width="15" 
+                height="15"
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-width="2" 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                class="lucide lucide-x-icon lucide-x">
+              <path d="M18 6 6 18"/>
+              <path d="m6 6 12 12"/>
+            </svg>
+            <span><%= @property.open? ? "Close" : "Reopen" %></span>
+          </button>
+        </div>
+
+        <%= render "delete_modal" %>
+
+      </div>
+    </div>
+
+    <section class="mb-6 rounded-xl border border-gray-200 bg-white">
+      <div class="border-b border-gray-200 px-6 py-4">
+        <h2 class="text-base font-semibold text-gray-900">Property Details</h2>
+      </div>
+
+      <div class="px-6 py-5">
+        <dl class="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+          <div>
+            <dt class="text-xs text-gray-500">Location</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @property.location.presence || "—" %></dd>
+          </div>
+
+          <div>
+            <dt class="text-xs text-gray-500">Price / Month</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%= @property.price_per_month.present? ? "£#{@property.price_per_month}" : "—" %>
+            </dd>
+          </div>
+
+          <div>
+            <dt class="text-xs text-gray-500">Priority</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%=
+                case @property.personal_priority
+                when 1 then "High"
+                when 2 then "Medium"
+                when 3 then "Low"
+                else "—"
+                end
+              %>
+            </dd>
+          </div>
+
+          <div>
+            <dt class="text-xs text-gray-500">Address</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @property.address.presence || "—" %></dd>
+          </div>
+
+          <div>
+            <dt class="text-xs text-gray-500">Postcode</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @property.postcode.presence || "—" %></dd>
+          </div>
+
+          <div>
+            <dt class="text-xs text-gray-500">Council Tax Band</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @property.council_tax_band.presence || "—" %></dd>
+          </div>
+
+          <div>
+            <dt class="text-xs text-gray-500">EPC Rating</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @property.epc_rating.presence || "—" %></dd>
+          </div>
+
+          <div>
+            <dt class="text-xs text-gray-500">Status</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @property.open? ? "Open" : "Closed" %></dd>
+          </div>
+        </dl>
+
+        <% if @property.url.present? %>
+          <div class="mt-5 border-t border-gray-200 pt-4">
+            <%= link_to @property.url,
+                target: "_blank",
+                rel: "noopener",
+                class: "inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800" do %>
+              <span>↗</span>
+              <span>View Original Listing</span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+    <% if @property.notes.present? || @property.disadvantages.present? %>
+      <section class="mb-6 rounded-xl border border-gray-200 bg-white">
+        <div class="border-b border-gray-200 px-6 py-4">
+          <h2 class="text-base font-semibold text-gray-900">Notes</h2>
+        </div>
+
+        <div class="space-y-5 px-6 py-5">
+          <% if @property.notes.present? %>
+            <div>
+              <h3 class="mb-1 text-xs text-gray-500">General Notes</h3>
+              <p class="text-sm text-gray-900"><%= @property.notes %></p>
+            </div>
+          <% end %>
+
+          <% if @property.disadvantages.present? %>
+            <div>
+              <h3 class="mb-1 text-xs text-gray-500">Disadvantages</h3>
+              <p class="text-sm text-gray-900"><%= @property.disadvantages %></p>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+
+    <section class="rounded-xl border border-gray-200 bg-white">
+      <div class="border-b border-gray-200 px-6 py-4">
+        <h2 class="text-base font-semibold text-gray-900">Event Timeline</h2>
+      </div>
+
+      <div class="px-6 py-8 text-center">
+        <p class="text-sm text-gray-500">No events recorded yet.</p>
+      </div>
+    </section>
+  </main>
+</div>
