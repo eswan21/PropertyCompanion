@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  property: one
+  event_type: MyString
+  note: MyText
+  created_by: one
+
+two:
+  property: two
+  event_type: MyString
+  note: MyText
+  created_by: two

@@ -1,5 +1,10 @@
 class Property < ApplicationRecord
   belongs_to :search
+  has_many :property_events, dependent: :destroy
+
+  def viewed?
+    property_events.exists?(event_type: "viewed")
+  end
 
   validates :title, presence: true
 
