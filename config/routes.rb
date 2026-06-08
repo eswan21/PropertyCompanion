@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   resources :searches, only: [ :index, :show, :create, :update, :destroy ] do
     resources :properties, only: [ :show, :create, :update, :destroy ] do
+      member do
+        patch :toggle_status
+      end
+
       resources :property_events, only: [ :new, :create ]
     end
   end
