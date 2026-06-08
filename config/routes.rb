@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         patch :toggle_status
       end
 
-      resources :property_events, only: [ :new, :create ]
+      resources :property_events, only: [ :create ]
     end
   end
 

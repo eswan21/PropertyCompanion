@@ -165,25 +165,12 @@
 
                   <td class ="px-6 py-5">
                     <div class="flex items-center gap-2">
-                      <button type="button"
-                             <% # data-action="click->search-card#edit" %>
-                             <% # onclick="event.preventDefault(); event.stopPropagation();"%>
-                              class="p-1.5 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="lucide lucide-calendar-plus-icon lucide-calendar-plus">
-                          <path d="M16 19h6"/><path d="M16 2v4"/><path d="M19 16v6"/>
-                          <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"/>
-                          <path d="M3 10h18"/><path d="M8 2v4"/>
-                        </svg>
-                      </button>
+
+                      <%= render "property_events/modal",
+                        search: @search,
+                        property: property,
+                        button_variant: :icon %>
+
 
                       <button type="button"
                         <%# data-action="click->modal#open"%>
