@@ -1,5 +1,5 @@
 class Property < ApplicationRecord
-  belongs_to :search
+  belongs_to :search, touch: true
   has_many :property_events, dependent: :destroy
 
   def viewed?
