@@ -4,10 +4,10 @@ one:
   property: one
   event_type: MyString
   note: MyText
-  created_by: one
+  creator: one
 
 two:
   property: two
   event_type: MyString
   note: MyText
-  created_by: two
+  creator: two
