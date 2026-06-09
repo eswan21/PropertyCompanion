@@ -68,9 +68,9 @@
 											</div>
 
 											<div class="flex items-center gap-4 text-xl text-gray-500">
-												<span>2 open</span>
+												<span><%= search.open_properties_count %> open</span>
 												<span>·</span>
-												<span>1 closed</span>
+												<span><%= search.closed_properties_count %> closed</span>
 												<span>·</span>
 												<span>Updated <%= search.updated_at.strftime("%Y-%m-%d") %></span>
 											</div>
@@ -153,7 +153,7 @@
 					<%= f.label :name,
 								"Search Name",
 								class: "block text-sm font-medium mb-2" %>
-					
+
 					<% if @search&.errors&.any? %>
 						<div class="mb-4 rounded-md bg-red-50 border border-red-200 p-3">
 							<% @search.errors.full_messages.each do |message| %>
@@ -161,7 +161,7 @@
 							<% end %>
 						</div>
 					<% end %>
-								
+
 					<%= f.text_field :name,
 								required: true,
 								placeholder: "e.g. Manchester 2-bed search",

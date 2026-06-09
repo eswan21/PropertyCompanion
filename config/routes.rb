@@ -3,7 +3,13 @@ Rails.application.routes.draw do
   root "searches#index"
 
   resources :searches, only: [ :index, :show, :create, :update, :destroy ] do
-    resources :properties, only: [ :show, :create, :update, :destroy ]
+    resources :properties, only: [ :show, :create, :update, :destroy ] do
+      member do
+        patch :toggle_status
+      end
+
+      resources :property_events, only: [ :create ]
+    end
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

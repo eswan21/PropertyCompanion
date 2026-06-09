@@ -1,5 +1,10 @@
 class Property < ApplicationRecord
-  belongs_to :search
+  belongs_to :search, touch: true
+  has_many :property_events, dependent: :destroy
+
+  def viewed?
+    property_events.exists?(event_type: "viewed")
+  end
 
   validates :title, presence: true
 
@@ -16,6 +21,7 @@ class Property < ApplicationRecord
             allow_blank: true
 
   scope :by_priority, -> {
-    order(Arel.sql("personal_priority ASC NULLS LAST"))
+    order(open: :desc)
+      .order(Arel.sql("personal_priority ASC NULLS LAST"))
   }
 end

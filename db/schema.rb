@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_04_120611) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_08_134921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -31,6 +31,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_120611) do
     t.datetime "updated_at", null: false
     t.string "url"
     t.index ["search_id"], name: "index_properties_on_search_id"
+  end
+
+  create_table "property_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "created_by_id", null: false
+    t.string "event_type", null: false
+    t.text "note"
+    t.bigint "property_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_property_events_on_created_by_id"
+    t.index ["property_id"], name: "index_property_events_on_property_id"
   end
 
   create_table "searches", force: :cascade do |t|
@@ -55,5 +66,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_120611) do
   end
 
   add_foreign_key "properties", "searches"
+  add_foreign_key "property_events", "properties"
+  add_foreign_key "property_events", "users", column: "created_by_id"
   add_foreign_key "searches", "users"
 end
