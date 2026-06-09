@@ -71,7 +71,7 @@
                   <td class="px-6 py-5">
                     <div class="flex items-center w-full">
                       <div class="flex-1 min-w-0">
-                        <%= link_to property.title,
+                        <%= link_to truncate(property.title, length: 25),
                           search_property_path(@search, property),
                           class: property.open? ?
                             "text-blue-500 hover:text-blue-600 font-medium" :
@@ -178,15 +178,39 @@
                   </td>
 
                   <td class="<%= property.open? ? 'text-gray-700' : 'text-gray-300' %> px-6 py-5 max-w-[180px]">
-                    <span class="block truncate cursor-default" title="<%= property.notes %>">
-                      <%= property.notes.present? ? truncate(property.notes, length: 24) : "—" %>
-                    </span>
+                    <div class="relative group">
+                      <span class="block truncate cursor-default" title="<%= property.notes %>">
+                        <%= property.notes.present? ? truncate(property.notes, length: 24) : "—" %>
+                      </span>
+                      <% if property.notes.present? %>
+                        <div class="absolute left-1/2 bottom-full z-10 mb-2
+                            -translate-x-1/2 rounded-xl border border-gray-200 bg-white
+                            px-4 py-3 shadow-lg text-sm w-64
+                            whitespace-normal break-words
+                            opacity-0 invisible transition-all duration-150
+                            group-hover:opacity-100 group-hover:visible <%= property.open? ? 'text-gray-600' : 'text-gray-400' %>">
+                          <%= property.notes %>
+                        </div>
+                      <% end %>
+                    </div>
                   </td>
 
                   <td class="<%= property.open? ? 'text-gray-700' : 'text-gray-300' %> px-6 py-5 max-w-[180px]">
-                    <span class="block truncate cursor-default" title="<%= property.disadvantages %>">
-                      <%= property.disadvantages.present? ? truncate(property.disadvantages, length: 28) : "—" %>
-                    </span>
+                    <div class="relative group">
+                      <span class="block truncate cursor-default" title="<%= property.disadvantages %>">
+                        <%= property.disadvantages.present? ? truncate(property.disadvantages, length: 28) : "—" %>
+                      </span>
+                      <% if property.disadvantages.present? %>
+                        <div class="absolute left-1/2 bottom-full z-10 mb-2
+                            -translate-x-1/2 rounded-xl border border-gray-200 bg-white
+                            px-4 py-3 shadow-lg text-sm w-64
+                            whitespace-normal break-words
+                            opacity-0 invisible transition-all duration-150
+                            group-hover:opacity-100 group-hover:visible <%= property.open? ? 'text-gray-600' : 'text-gray-400' %>">
+                          <%= property.disadvantages %>
+                        </div>
+                      <% end %>
+                    </div>
                   </td>
 
                   <td class ="px-6 py-5">
