@@ -47,7 +47,7 @@ class PropertiesController < ApplicationController
       creator: current_user
     )
 
-    redirect_to search_property_path(@search, @property)
+    redirect_to params[:return_to].presence || search_property_path(@search, @property)
   end
 
   private

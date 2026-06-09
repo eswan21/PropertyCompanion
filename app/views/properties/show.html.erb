@@ -43,51 +43,14 @@
            property: @property,
            button_variant: :large %>
 
-
-
-          <%= button_to toggle_status_search_property_path(@search, @property),
-              method: :patch,
-              class: "whitespace-nowrap flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 hover:bg-gray-100" do %>
-            <% if @property.open? %>
-              <svg xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-x-icon lucide-x">
-                <path d="M18 6 6 18"/>
-                <path d="m6 6 12 12"/>
-              </svg>
-            <% else %>
-              <svg xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw">
-                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                <path d="M3 3v5h5"/>
-              </svg>
-            <% end %>
-
-            <span><%= @property.open? ? "Close" : "Reopen" %></span>
-          <% end %>
+          <%= render "properties/status_modal",
+           search: @search,
+           property: @property,
+           button_variant: :large %>
         </div>
-
         <%= render "delete_modal" %>
-
       </div>
     </div>
-
-    <%= render "close_reopen_modal", property: @property, search: @search %>
 
     <section class="mb-6 rounded-xl border border-gray-200 bg-white">
       <div class="border-b border-gray-200 px-6 py-4">

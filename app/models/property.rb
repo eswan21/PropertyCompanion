@@ -21,6 +21,7 @@ class Property < ApplicationRecord
             allow_blank: true
 
   scope :by_priority, -> {
-    order(Arel.sql("personal_priority ASC NULLS LAST"))
+    order(open: :desc)
+      .order(Arel.sql("personal_priority ASC NULLS LAST"))
   }
 end

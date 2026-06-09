@@ -1,0 +1,29 @@
+<% is_closing = property.open? %>
+
+<%= form_with url: toggle_status_search_property_path(search, property),
+              method: :patch,
+              class: "space-y-4" do |form| %>
+
+  <%= hidden_field_tag :return_to, request.fullpath %>
+
+  <div>
+    <%= form.label :note, "Note (optional)",
+                   class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+    <%= form.text_area :note,
+                       rows: 3,
+                       placeholder: "Add a reason...",
+                       class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" %>
+  </div>
+
+  <div class="flex justify-end gap-3 pt-2">
+    <button type="button"
+            data-action="click->modal#close"
+            class="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+      Cancel
+    </button>
+
+    <%= form.submit(is_closing ? "Close" : "Reopen",
+                    class: "#{is_closing ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} rounded-lg px-4 py-2 text-sm font-medium text-white") %>
+  </div>
+<% end %>

@@ -55,12 +55,12 @@
 
             <tbody class="divide-y divide-gray-200">
               <% @properties.each do |property| %>
-                <tr class="hover:bg-gray-50">
-                  <td class="px-6 py-5 text-gray-700">
+                <tr class="<%= property.open? ? 'hover:bg-gray-50' : 'bg-gray-50' %>">
+                  <td class="<%= property.open? ? 'text-gray-700' : 'text-gray-300' %> px-6 py-5 ">
                     <%= property.location.presence || "—" %>
                   </td>
 
-                  <td class="px-6 py-5">
+                  <td class="<%= property.open? ? 'text-gray-700' : 'text-gray-300' %> px-6 py-5 ">
                     <% if property.price_per_month.present? %>
                       £<%= property.price_per_month %>/mo
                     <% else %>
@@ -73,14 +73,18 @@
                       <div class="flex-1 min-w-0">
                         <%= link_to property.title,
                           search_property_path(@search, property),
-                          class: "font-medium text-blue-500 hover:text-blue-600 truncate block" %>
+                          class: property.open? ?
+                            "text-blue-500 hover:text-blue-600 font-medium" :
+                            "text-gray-300 hover:text-gray-400 font-medium" %>
                       </div>
 
                       <div class="ml-3 shrink-0">
                         <% if property.url.present? %>
                           <%= link_to property.url,
                                 target: "_blank",
-                                class: "text-gray-500 hover:text-blue-500" do %>
+                                class: property.open? ?
+                                  "text-gray-500 hover:text-blue-500" :
+                                  "text-gray-300 hover:text-gray-400" do %>
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 width="20"
                                 height="20"
@@ -103,30 +107,52 @@
                         <% if property.personal_priority.present? %>
                           <% case property.personal_priority %>
                           <% when 1 %>
-                            <span class="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">
-                              high
-                            </span>
+                            <% if property.open? %>
+                              <span class="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">
+                                high
+                              </span>
+                            <% else %>
+                              <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-300">
+                                high
+                              </span>
+                            <% end %>
                           <% when 2 %>
-                            <span class="rounded-full border border-yellow-200 bg-yellow-50 px-3 py-1 text-xs font-semibold text-yellow-600">
-                              medium
-                            </span>
+                            <% if property.open? %>
+                              <span class="rounded-full border border-yellow-200 bg-yellow-50 px-3 py-1 text-xs font-semibold text-yellow-600">
+                                medium
+                              </span>
+                            <% else %>
+                              <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-300">
+                                medium
+                              </span>
+                            <% end %>
                           <% when 3 %>
-                            <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-500">
-                              low
-                            </span>
+                            <% if property.open? %>
+                              <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-500">
+                                low
+                              </span>
+                            <% else %>
+                              <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-300">
+                                low
+                              </span>
+                            <% end %>
                           <% end %>
                         <% end %>
                       </div>
                     </div>
                   </td>
 
-                  <td class="px-6 py-5">
+                  <td class="<%= property.open? ? 'text-gray-700' : 'text-gray-300' %> px-6 py-5 ">
                     <%= property.council_tax_band.presence || "—" %>
                   </td>
 
                   <td class="px-6 py-5">
                     <% if property.viewed? %>
-                      <div class="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+                      <div class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium
+                          <%= property.open? ?
+                            'bg-green-100 text-green-700'
+                            :
+                            'bg-gray-100 text-gray-400' %>">
                           <svg xmlns="http://www.w3.org/2000/svg"
                               width="15"
                               height="15"
@@ -151,13 +177,13 @@
                     <% end %>
                   </td>
 
-                  <td class="px-6 py-5 max-w-[180px]">
+                  <td class="<%= property.open? ? 'text-gray-700' : 'text-gray-300' %> px-6 py-5 max-w-[180px]">
                     <span class="block truncate cursor-default" title="<%= property.notes %>">
                       <%= property.notes.present? ? truncate(property.notes, length: 24) : "—" %>
                     </span>
                   </td>
 
-                  <td class="px-6 py-5 max-w-[180px]">
+                  <td class="<%= property.open? ? 'text-gray-700' : 'text-gray-300' %> px-6 py-5 max-w-[180px]">
                     <span class="block truncate cursor-default" title="<%= property.disadvantages %>">
                       <%= property.disadvantages.present? ? truncate(property.disadvantages, length: 28) : "—" %>
                     </span>
@@ -171,45 +197,15 @@
                         property: property,
                         button_variant: :icon %>
 
-
-                      <button type="button"
-                        <%# data-action="click->modal#open"%>
-                        <%# onclick="event.preventDefault(); event.stopPropagation();"%>
-                        class="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700 cursor-pointer">
-                        <% if property.open? %>
-                          <svg xmlns="http://www.w3.org/2000/svg"
-                              width="20"
-                              height="20"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="lucide lucide-x-icon lucide-x">
-                            <path d="M18 6 6 18"/>
-                            <path d="m6 6 12 12"/>
-                          </svg>
-                        <% else %>
-                          <svg xmlns="http://www.w3.org/2000/svg"
-                              width="20"
-                              height="20"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw">
-                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                            <path d="M3 3v5h5"/>
-                          </svg>
-                        <% end %>
-                      </button>
+                      <%= render "properties/status_modal",
+                        search: @search,
+                        property: property,
+                        button_variant: :icon %>
 
                       <%= link_to "View",
                           search_property_path(@search, property),
-                          class: "inline-flex items-center justify-center h-8 px-2 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg" %>
+                            class: "inline-flex items-center justify-center h-8 px-2 text-sm rounded-lg hover:bg-gray-100
+                              #{property.open? ? 'text-gray-500 hover:text-gray-700' : 'text-gray-300 hover:text-gray-400'}" %>
                     </div>
                   </td>
                 </tr>

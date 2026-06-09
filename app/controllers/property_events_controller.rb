@@ -8,10 +8,10 @@ class PropertyEventsController < ApplicationController
     @property_event.creator = current_user
 
     if @property_event.save
-      redirect_back fallback_location: search_property_path(@search, @property)
+      redirect_to params[:return_to].presence || search_property_path(@search, @property)
     else
-      redirect_back fallback_location: search_property_path(@search, @property),
-                    alert: "Event could not be added."
+      redirect_to params[:return_to].presence || search_property_path(@search, @property),
+                  alert: "Event could not be added."
     end
   end
 

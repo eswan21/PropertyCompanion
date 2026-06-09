@@ -1,0 +1,107 @@
+<% is_closing = property.open? %>
+
+<div data-controller="modal">
+  <% if button_variant == :icon %>
+    <div class="relative group">
+      <button type="button"
+              data-action="click->modal#open"
+              class="p-1.5 rounded-lg hover:bg-gray-100 cursor-pointer
+                <%= property.open? ?
+                  'text-gray-500 hover:text-gray-700 '
+                  :
+                  'text-gray-300 hover:text-gray-400' %>">
+        <% if property.open? %>
+          <svg xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-x-icon lucide-x">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+          </svg>
+        <% else %>
+          <svg xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+        <% end %>
+      </button>
+      <div class="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 rounded-xl bg-white px-3 py-2 shadow-lg border border-gray-200 text-gray-500 group-hover:block whitespace-nowrap z-10">
+        <%= property.open? ? "Close" : "Reopen" %>
+      </div>
+    </div>
+  <% else%>
+    <button type="button"
+            data-action="click->modal#open"
+            class="whitespace-nowrap flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
+      <% if property.open? %>
+        <svg xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-x-icon lucide-x">
+          <path d="M18 6 6 18"/>
+          <path d="m6 6 12 12"/>
+        </svg>
+      <% else %>
+        <svg xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+      <% end %>
+
+      <span><%= property.open? ? "Close" : "Reopen" %></span>
+    </button>
+  <% end %>
+
+  <div data-modal-target="window"
+       class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div class="relative w-full max-w-md rounded-xl bg-white p-6">
+      <button type="button"
+              data-action="click->modal#close"
+              class="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
+        ✕
+      </button>
+
+      <h2 class="text-xl font-semibold text-gray-900">
+        <%= is_closing ? "Mark as Closed" : "Reopen Property" %>
+      </h2>
+
+      <p class="mt-1 mb-6 text-sm text-gray-500">
+        <%= property.title.presence || property.address %>
+      </p>
+
+      <%= render "properties/status_form",
+                 search: search,
+                 property: property %>
+    </div>
+  </div>
+</div>
