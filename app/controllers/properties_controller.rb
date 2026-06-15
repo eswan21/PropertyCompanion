@@ -4,11 +4,12 @@ class PropertiesController < ApplicationController
   before_action :set_property, only: [ :show, :update, :destroy, :toggle_status ]
 
   def show
+    authorize @property
   end
 
   def create
-    @search = Search.find(params[:search_id])
     @property = @search.properties.build(property_params)
+    authorize @property
 
     if @property.save
       redirect_to @search
@@ -18,6 +19,8 @@ class PropertiesController < ApplicationController
   end
 
   def update
+    authorize @property
+
     if @property.update(property_params)
       redirect_to search_property_path(@search, @property)
     else
@@ -26,11 +29,13 @@ class PropertiesController < ApplicationController
   end
 
   def destroy
+    authorize @property
     @property.destroy
     redirect_to search_path(@search)
   end
 
   def toggle_status
+    authorize @property, :update?
     if @property.open?
       @property.update!(open: false)
       event_type = "close"
@@ -69,7 +74,7 @@ class PropertiesController < ApplicationController
   end
 
   def set_search
-    @search = current_user.searches.find(params[:search_id])
+    @search = policy_scope(Search).find(params[:search_id])
   end
 
   def set_property

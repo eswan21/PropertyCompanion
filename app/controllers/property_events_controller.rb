@@ -7,6 +7,8 @@ class PropertyEventsController < ApplicationController
     @property_event = @property.property_events.build(property_event_params)
     @property_event.creator = current_user
 
+    authorize @property_event
+
     if @property_event.save
       redirect_to params[:return_to].presence || search_property_path(@search, @property)
     else
@@ -18,7 +20,7 @@ class PropertyEventsController < ApplicationController
   private
 
   def set_search
-    @search = current_user.searches.find(params[:search_id])
+    @search = policy_scope(Search).find(params[:search_id])
   end
 
   def set_property
