@@ -27,7 +27,9 @@ class SearchPolicy < ApplicationPolicy
     owner?
   end
 
-  private
+  def share?
+    owner?
+  end
 
   def owner?
     record.user == user

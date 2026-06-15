@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root "searches#index"
 
   resources :searches, only: [ :index, :show, :create, :update, :destroy ] do
+    resources :search_permissions, only: [ :create, :destroy ]
+
     resources :properties, only: [ :show, :create, :update, :destroy ] do
       member do
         patch :toggle_status

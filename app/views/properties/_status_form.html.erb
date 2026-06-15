@@ -19,11 +19,11 @@
   <div class="flex justify-end gap-3 pt-2">
     <button type="button"
             data-action="click->modal#close"
-            class="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+            class="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer">
       Cancel
     </button>
 
     <%= form.submit(is_closing ? "Close" : "Reopen",
-                    class: "#{is_closing ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} rounded-lg px-4 py-2 text-sm font-medium text-white") %>
+                    class: "#{is_closing ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} rounded-lg px-4 py-2 text-sm font-medium text-white cursor-pointer") %>
   </div>
 <% end %>

@@ -1,0 +1,2 @@
+module SearchPermissionsHelper
+end
