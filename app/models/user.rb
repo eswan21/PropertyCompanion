@@ -5,4 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :searches, dependent: :destroy
+
+  has_many :search_permissions, dependent: :destroy
+  has_many :shared_searches, through: :search_permissions, source: :search
 end

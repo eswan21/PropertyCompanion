@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_08_134921) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_15_161458) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -44,6 +44,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_134921) do
     t.index ["property_id"], name: "index_property_events_on_property_id"
   end
 
+  create_table "search_permissions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "search_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["search_id", "user_id"], name: "index_search_permissions_on_search_id_and_user_id", unique: true
+    t.index ["search_id"], name: "index_search_permissions_on_search_id"
+    t.index ["user_id"], name: "index_search_permissions_on_user_id"
+  end
+
   create_table "searches", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -68,5 +78,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_134921) do
   add_foreign_key "properties", "searches"
   add_foreign_key "property_events", "properties"
   add_foreign_key "property_events", "users", column: "created_by_id"
+  add_foreign_key "search_permissions", "searches"
+  add_foreign_key "search_permissions", "users"
   add_foreign_key "searches", "users"
 end
