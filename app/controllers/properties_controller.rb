@@ -12,7 +12,7 @@ class PropertiesController < ApplicationController
     authorize @property
 
     if @property.save
-      redirect_to @search
+      redirect_to @search, notice: "Property created successfully."
     else
       render :new, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class PropertiesController < ApplicationController
     authorize @property
 
     if @property.update(property_params)
-      redirect_to search_property_path(@search, @property)
+      redirect_to search_property_path(@search, @property), notice: "Property updated successfully."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class PropertiesController < ApplicationController
   def destroy
     authorize @property
     @property.destroy
-    redirect_to search_path(@search)
+    redirect_to search_path(@search), notice: "Property deleted successfully."
   end
 
   def toggle_status
@@ -51,8 +51,12 @@ class PropertiesController < ApplicationController
       note: params[:note].presence || default_note,
       creator: current_user
     )
+    message =
+      event_type == "close" ?
+        "Property closed successfully." :
+        "Property reopened successfully."
 
-    redirect_to params[:return_to].presence || search_property_path(@search, @property)
+    redirect_to params[:return_to].presence || search_property_path(@search, @property), notice: message
   end
 
   private

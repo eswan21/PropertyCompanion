@@ -17,7 +17,7 @@ class SearchesController < ApplicationController
     authorize @search
 
     if @search.save
-      redirect_to searches_path
+      redirect_to searches_path, notice: "Search created successfully."
     else
       @searches = current_user.searches
       render :index, status: :unprocessable_entity
@@ -27,7 +27,7 @@ class SearchesController < ApplicationController
   def update
     authorize @search
     if @search.update(search_params)
-      redirect_to searches_path
+      redirect_to searches_path, notice: "Search updated successfully."
     else
       @searches = current_user.searches
       render :index, status: :unprocessable_entity
@@ -37,7 +37,7 @@ class SearchesController < ApplicationController
   def destroy
     authorize @search
     @search.destroy
-    redirect_to searches_path
+    redirect_to searches_path, notice: "Search deleted successfully."
   end
 
   private

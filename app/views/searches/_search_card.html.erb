@@ -1,0 +1,78 @@
+<div data-controller="search-card modal"
+                class="group block rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm hover:shadow-md transition">
+  <div data-search-card-target="display">
+    <%= link_to search_path(search), class: "block" do %>
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-3">
+            <h3 class="text-xl font-medium"><%= search.name %></h3>
+
+            <% if policy(search).owner? && search.shared_users.any? %>
+              <span class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-users-icon lucide-users">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <path d="M16 3.128a4 4 0 0 1 0 7.744"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <circle cx="9" cy="7" r="4"/>
+                </svg>
+                Shared
+              </span>
+            <% end %>
+
+            <% unless policy(search).owner? %>
+              <span class="inline-flex rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-900">
+                Shared with you
+              </span>
+            <% end %>
+
+            <% if policy(search).share? %>
+              <div class="hidden group-hover:flex items-center gap-1">
+                <button type="button"
+                        data-action="click->search-card#edit"
+                        onclick="event.preventDefault(); event.stopPropagation();"
+                        class="p-1.5 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round">
+                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+                    <path d="m15 5 4 4"/>
+                  </svg>
+                </button>
+
+                <%= render "searches/delete_modal", search: search %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="flex items-center gap-4 text-xl text-gray-500">
+            <span><%= search.open_properties_count %> open</span>
+            <span>·</span>
+            <span><%= search.closed_properties_count %> closed</span>
+            <span>·</span>
+            <span>Updated <%= search.updated_at.strftime("%Y-%m-%d") %></span>
+          </div>
+        </div>
+
+        <span class="text-4xl text-gray-500">›</span>
+      </div>
+    <% end %>
+  </div>
+
+  <div data-search-card-target="form" class="hidden">
+    <%= render "searches/edit_form", search: search %>
+  </div>
+</div>

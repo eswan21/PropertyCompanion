@@ -1,213 +1,35 @@
-<div data-controller="modal">
-	<div class="min-h-screen bg-gray-50 text-gray-900">
-		<main>
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-				<div class="flex items-center justify-between mb-10">
-					<h2 class="text-4xl font-bold">My Searches</h2>
+<div class="min-h-screen bg-gray-50 text-gray-900">
+  <main>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex items-center justify-between mb-10">
+        <h2 class="text-4xl font-bold">My Searches</h2>
 
-					<button type="button"
-									data-action="click->modal#open"
-									class="flex items-center gap-3 rounded-lg bg-blue-700 px-6 py-4 text-xl font-medium text-white hover:bg-blue-500 cursor-pointer">
-						<span class="text-2xl leading-none">+</span>
-						<span>New Search</span>
-					</button>
-				</div>
+        <%= render "searches/new_modal", search: @search || Search.new %>
+      </div>
 
-				<div class="space-y-5">
-					<% @searches.each do |search| %>
-						<div data-controller="search-card modal"
-								class="group block rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm hover:shadow-md transition">
-
-							<div data-search-card-target="display">
-								<%= link_to search_path(search), class: "block" do %>
-									<div class="flex items-center justify-between">
-										<div>
-											<div class="flex items-center gap-3">
-												<h3 class="text-xl font-medium"><%= search.name %></h3>
-
-												<% if policy(search).owner? && search.shared_users.any? %>
-													<span class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-900">
-														<svg xmlns="http://www.w3.org/2000/svg"
-																width="15"
-																height="15"
-																viewBox="0 0 24 24" fill="none"
-																stroke="currentColor"
-																stroke-width="2"
-																stroke-linecap="round"
-																stroke-linejoin="round"
-																class="lucide lucide-users-icon lucide-users">
-															<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-															<path d="M16 3.128a4 4 0 0 1 0 7.744"/>
-															<path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-															<circle cx="9" cy="7" r="4"/>
-														</svg>
-														Shared
-													</span>
-												<% end %>
-
-												<% unless policy(search).owner? %>
-													<span class="inline-flex rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-900">
-														Shared with you
-													</span>
-												<% end %>
-
-												 <% if policy(search).share? %>
-													<div class="hidden group-hover:flex items-center gap-1">
-														<button type="button"
-																		data-action="click->search-card#edit"
-																		onclick="event.preventDefault(); event.stopPropagation();"
-																		class="p-1.5 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 cursor-pointer">
-															<svg xmlns="http://www.w3.org/2000/svg"
-																	width="15"
-																	height="15"
-																	viewBox="0 0 24 24"
-																	fill="none"
-																	stroke="currentColor"
-																	stroke-width="2"
-																	stroke-linecap="round"
-																	stroke-linejoin="round">
-																<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
-																<path d="m15 5 4 4"/>
-															</svg>
-														</button>
-
-														<button type="button"
-															data-action="click->modal#open"
-															onclick="event.preventDefault(); event.stopPropagation();"
-															class="p-1.5 rounded-lg hover:bg-red-50 text-gray-500 hover:text-red-500 cursor-pointer">
-															<svg xmlns="http://www.w3.org/2000/svg"
-																	width="15"
-																	height="15"
-																	viewBox="0 0 24 24"
-																	fill="none"
-																	stroke="currentColor"
-																	stroke-width="2"
-																	stroke-linecap="round"
-																	stroke-linejoin="round">
-																<path d="M10 11v6"/>
-																<path d="M14 11v6"/>
-																<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
-																<path d="M3 6h18"/>
-																<path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-															</svg>
-														</button>
-													</div>
-												<% end %>
-											</div>
-
-											<div class="flex items-center gap-4 text-xl text-gray-500">
-												<span><%= search.open_properties_count %> open</span>
-												<span>·</span>
-												<span><%= search.closed_properties_count %> closed</span>
-												<span>·</span>
-												<span>Updated <%= search.updated_at.strftime("%Y-%m-%d") %></span>
-											</div>
-										</div>
-
-										<span class="text-4xl text-gray-500">›</span>
-									</div>
-								<% end %>
-								<div data-modal-target="window"
-											class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-
-										<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
-											<h2 class="text-xl font-semibold mb-3">Delete Search</h2>
-
-											<p class="text-gray-500 mb-6">
-												Are you sure you want to delete "<%= search.name %>"?
-											</p>
-
-											<div class="flex justify-end gap-3">
-												<button type="button"
-																data-action="click->modal#close"
-																class="rounded-md border border-gray-300 px-4 py-2 hover:bg-gray-50 cursor-pointer">
-													Cancel
-												</button>
-
-												<%= button_to "Delete",
-															search_path(search),
-															method: :delete,
-															class: "rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600" %>
-											</div>
-										</div>
-									</div>
-							</div>
-
-							<div data-search-card-target="form" class="hidden">
-								<%= form_with model: search,
-											class: "flex items-center gap-3" do |f| %>
-
-									<%= f.text_field :name,
-												value: search.name,
-												required: true,
-												class: "flex-1 rounded-md border border-gray-300 px-3 py-2" %>
-
-									<%= f.submit "Save",
-												class: "shrink-0 rounded-md bg-blue-700 px-4 py-2 text-white hover:bg-blue-500 cursor-pointer" %>
-
-									<button
-										type="button"
-										data-action="click->search-card#cancel"
-										class="shrink-0 rounded-md bg-red-500 text-white px-4 py-2 hover:bg-red-300 cursor-pointer">
-										Cancel
-									</button>
-
-								<% end %>
-							</div>
-						</div>
-					<% end %>
-				</div>
-			</div>
-		</main>
-	</div>
-
-	<div data-modal-target="window"
-     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-		<div class="w-full max-w-md rounded-lg bg-white shadow-lg border border-gray-200 p-6">
-
-			<div class="flex items-center justify-between mb-6">
-				<h2 class="text-xl font-semibold">Create New Search</h2>
-
-				<button type="button"
-								data-action="click->modal#close"
-								class="text-gray-500 hover:text-gray-900 cursor-pointer">
-					✕
-				</button>
-			</div>
-
-			<%= form_with model: Search.new, url: searches_path, class: "space-y-4" do |f| %>
-
-				<div>
-					<%= f.label :name,
-								"Search Name",
-								class: "block text-sm font-medium mb-2" %>
-
-					<% if @search&.errors&.any? %>
-						<div class="mb-4 rounded-md bg-red-50 border border-red-200 p-3">
-							<% @search.errors.full_messages.each do |message| %>
-								<p class="text-red-600 text-sm"><%= message %></p>
-							<% end %>
-						</div>
-					<% end %>
-
-					<%= f.text_field :name,
-								required: true,
-								placeholder: "e.g. Manchester 2-bed search",
-								class: "w-full rounded-md border border-gray-300 px-3 py-2" %>
-				</div>
-
-				<div class="flex justify-end gap-3 pt-4">
-					<button type="button"
-									data-action="click->modal#close"
-									class="rounded-md border border-gray-300 px-4 py-2 hover:bg-gray-50 cursor-pointer">
-						Cancel
-					</button>
-
-					<%= f.submit "Create Search",
-								class: "rounded-md bg-blue-700 px-4 py-2 text-white hover:bg-blue-500 cursor-pointer" %>
-				</div>
-
-			<% end %>
-		</div>
-	</div>
+      <div class="space-y-5">
+        <% if @searches.any? %>
+          <% @searches.each do |search| %>
+            <%= render "searches/search_card", search: search %>
+          <% end %>
+        <% else %>
+          <div class="rounded-xl border border-gray-200 bg-white p-12 text-center">
+            <h2 class="text-lg font-medium mb-2">No searches yet</h2>
+            <p class="text-gray-500 mb-6">Create your first search.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </main>
 </div>
+
+
+
+
+
+
+
+
+
+
+
