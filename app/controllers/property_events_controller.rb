@@ -9,10 +9,13 @@ class PropertyEventsController < ApplicationController
 
     authorize @property_event
 
+    redirect_path = params[:return_to].presence || search_property_path(@search, @property)
+
     if @property_event.save
-      redirect_to params[:return_to].presence || search_property_path(@search, @property)
+      redirect_to redirect_path,
+              notice: "#{@property_event.event_type.humanize} event added successfully."
     else
-      redirect_to params[:return_to].presence || search_property_path(@search, @property),
+      redirect_to redirect_path,
                   alert: "Event could not be added."
     end
   end

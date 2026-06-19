@@ -24,6 +24,12 @@
                 autocomplete: "email",
                 placeholder: "you@example.com",
                 class: "w-full rounded-md border border-gray-300 px-3 py-2" %>
+
+          <% if resource.errors[:email].any? %>
+            <p class="mt-1 text-sm text-red-600">
+              <%= resource.errors.full_messages_for(:email).first %>
+            </p>
+          <% end %>
         </div>
 
         <%= f.submit "Send Reset Link",
