@@ -3,16 +3,18 @@ class SearchesController < ApplicationController
   before_action :set_search, only: [ :show, :update, :destroy ]
 
   def index
-    @searches = current_user.searches
+    @searches = policy_scope(Search)
   end
 
   def show
+    authorize @search
     @properties = @search.properties.by_priority
     @property = @search.properties.build
   end
 
   def create
     @search = current_user.searches.build(search_params)
+    authorize @search
 
     if @search.save
       redirect_to searches_path
@@ -23,6 +25,7 @@ class SearchesController < ApplicationController
   end
 
   def update
+    authorize @search
     if @search.update(search_params)
       redirect_to searches_path
     else
@@ -32,6 +35,7 @@ class SearchesController < ApplicationController
   end
 
   def destroy
+    authorize @search
     @search.destroy
     redirect_to searches_path
   end
@@ -43,6 +47,6 @@ class SearchesController < ApplicationController
   end
 
   def set_search
-    @search = current_user.searches.find(params[:id])
+    @search = policy_scope(Search).find(params[:id])
   end
 end

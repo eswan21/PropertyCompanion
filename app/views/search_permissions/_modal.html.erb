@@ -1,0 +1,42 @@
+<div data-controller="modal">
+  <% if policy(search).share? %>
+    <button type="button"
+          data-action="click->modal#open"
+          class="inline-flex items-center gap-2 rounded-lg bg-white border border-gray-300 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-share2-icon lucide-share-2">
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
+        <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
+      </svg>
+      Share
+    </button>
+
+    <div data-modal-target="window"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div class="relative w-full max-w-md rounded-xl bg-white p-6">
+        <button type="button"
+                data-action="click->modal#close"
+                class="absolute right-4 top-4 text-gray-500 hover:text-gray-700 cursor-pointer">
+          ✕
+        </button>
+
+        <div class="mb-6">
+          <h2 class="mb-4 text-xl font-semibold text-gray-900">Share Search</h2>
+
+          <%= render "search_permissions/form", search: search %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
