@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
-  mount_avo
   devise_for :users
+
+  authenticated :user, ->(user) { user.admin? } do
+    mount Avo::Engine, at: Avo.configuration.root_path
+  end
+
+  get "/avo", to: redirect("/users/sign_in")
+  get "/avo/*path", to: redirect("/users/sign_in")
+
   root "searches#index"
 
   resources :searches, only: [ :index, :show, :create, :update, :destroy ] do
