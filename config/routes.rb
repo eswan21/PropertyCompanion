@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   root "searches#index"
 
   resources :searches, only: [ :index, :show, :create, :update, :destroy ] do
-    resources :search_permissions, only: [ :create, :destroy ]
+    resources :search_permissions, only: [ :destroy ]
+
+    resources :search_invitations, only: [ :create ]
 
     resources :properties, only: [ :show, :create, :update, :destroy ] do
       member do
@@ -21,6 +23,12 @@ Rails.application.routes.draw do
       end
 
       resources :property_events, only: [ :create ]
+    end
+  end
+
+  resources :search_invitations, only: [ :show ] do
+    member do
+      patch :accept
     end
   end
 

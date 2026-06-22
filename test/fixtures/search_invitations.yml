@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  search: one
+  invited_by: one
+  email: MyString
+  token: MyString
+  accepted_at: 2026-06-22 19:48:33
+  expires_at: 2026-06-22 19:48:33
+
+two:
+  search: two
+  invited_by: two
+  email: MyString
+  token: MyString
+  accepted_at: 2026-06-22 19:48:33
+  expires_at: 2026-06-22 19:48:33

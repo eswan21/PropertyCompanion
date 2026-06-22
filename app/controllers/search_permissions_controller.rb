@@ -3,32 +3,32 @@ class SearchPermissionsController < ApplicationController
   before_action :set_search
 
 
-  def create
-    user = User.find_by(email: params[:search_permission][:email])
+  # def create
+  #   user = User.find_by(email: params[:search_permission][:email])
 
-    unless user
-      redirect_to @search, alert: "User not found."
-      return
-    end
+  #   unless user
+  #     redirect_to @search, alert: "User not found."
+  #     return
+  #   end
 
-    if user == @search.user
-      redirect_to @search, alert: "Search owner already has access."
-      return
-    end
+  #   if user == @search.user
+  #     redirect_to @search, alert: "Search owner already has access."
+  #     return
+  #   end
 
-    @search_permission = @search.search_permissions.build(user: user)
+  #   @search_permission = @search.search_permissions.build(user: user)
 
-    authorize @search_permission
+  #   authorize @search_permission
 
-    if @search_permission.save
-      SearchPermissionMailer.access_granted(@search_permission).deliver_later
+  #   if @search_permission.save
+  #     SearchPermissionMailer.access_granted(@search_permission).deliver_later
 
-      redirect_to @search, notice: "Access granted successfully."
-    else
-      redirect_to @search,
-                  alert: @search_permission.errors.full_messages.to_sentence
-    end
-  end
+  #     redirect_to @search, notice: "Access granted successfully."
+  #   else
+  #     redirect_to @search,
+  #                 alert: @search_permission.errors.full_messages.to_sentence
+  #   end
+  # end
 
   def destroy
     @search_permission = @search.search_permissions.find(params[:id])
