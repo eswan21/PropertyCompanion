@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get "/avo", to: redirect("/users/sign_in")
   get "/avo/*path", to: redirect("/users/sign_in")
 
+  mount LetterOpenerWeb::Engine, at: "/letters" if Rails.env.development?
+
   root "searches#index"
 
   resources :searches, only: [ :index, :show, :create, :update, :destroy ] do

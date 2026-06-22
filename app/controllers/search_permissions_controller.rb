@@ -21,6 +21,8 @@ class SearchPermissionsController < ApplicationController
     authorize @search_permission
 
     if @search_permission.save
+      SearchPermissionMailer.access_granted(@search_permission).deliver_later
+
       redirect_to @search, notice: "Access granted successfully."
     else
       redirect_to @search,
