@@ -1,0 +1,30 @@
+<div data-event-gallery-target="modal"
+     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+  <div class="relative w-full max-w-4xl rounded-xl bg-white p-4">
+    <button type="button"
+            data-action="click->event-gallery#close"
+            class="absolute right-4 top-4 z-10 text-2xl text-gray-500 hover:text-gray-900 cursor-pointer">
+      ×
+    </button>
+
+    <div class="mb-4 flex justify-center">
+      <img data-event-gallery-target="image"
+           src=""
+           class="max-h-[70vh] rounded-lg object-contain">
+    </div>
+
+    <div class="flex flex-wrap gap-2 border-t border-gray-200 pt-4">
+      <% event.photos.each do |photo| %>
+        <% full_url = url_for(photo) %>
+
+        <button type="button"
+                data-action="click->event-gallery#show"
+                data-full-url="<%= full_url %>"
+                class="h-16 w-16 overflow-hidden rounded-lg border border-gray-200 cursor-pointer">
+          <%= image_tag photo,
+                class: "h-full w-full object-cover" %>
+        </button>
+      <% end %>
+    </div>
+  </div>
+</div>

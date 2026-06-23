@@ -31,6 +31,6 @@ class PropertyEventsController < ApplicationController
   end
 
   def property_event_params
-    params.require(:property_event).permit(:event_type, :note)
+    params.require(:property_event).permit(:event_type, :note, photos: [])
   end
 end

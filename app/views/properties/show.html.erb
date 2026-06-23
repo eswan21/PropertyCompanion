@@ -149,42 +149,8 @@
       </section>
     <% end %>
 
-    <section class="rounded-xl border border-gray-200 bg-white">
-      <div class="border-b border-gray-200 px-6 py-4">
-        <h2 class="text-base font-semibold text-gray-900">Event Timeline</h2>
-      </div>
+    <%= render "property_events/timeline", property: @property %>
 
-      <div class="px-6 py-8">
-        <% if @property.property_events.empty? %>
-          <p class="py-6 text-center text-sm text-gray-500">No events recorded yet.</p>
-        <% else %>
-          <div class="space-y-4">
-            <% @property.property_events.order(created_at: :desc).each_with_index do |event, index| %>
-              <% if index > 0 %>
-                <div class="border-t border-gray-200 pt-4"></div>
-              <% end %>
 
-              <div class="flex items-start gap-3">
-                <span class="mt-0.5 shrink-0 rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-700">
-                  <%= event.event_type.titleize %>
-                </span>
-
-                <div class="min-w-0 flex-1">
-                  <% if event.note.present? %>
-                    <p class="text-sm text-gray-900">
-                      <%= event.note %>
-                    </p>
-                  <% end %>
-
-                  <p class="mt-1 text-xs text-gray-500">
-                    <%= event.creator.name %> · <%= event.created_at.strftime("%d %b %Y, %H:%M") %>
-                  </p>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-    </section>
   </main>
 </div>

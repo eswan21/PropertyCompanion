@@ -1,0 +1,21 @@
+<section class="rounded-xl border border-gray-200 bg-white">
+  <div class="border-b border-gray-200 px-6 py-4">
+    <h2 class="text-base font-semibold text-gray-900">Event Timeline</h2>
+  </div>
+
+  <div class="px-6 py-8">
+    <% if property.property_events.empty? %>
+      <p class="py-6 text-center text-sm text-gray-500">No events recorded yet.</p>
+    <% else %>
+      <div class="space-y-4">
+        <% property.property_events.order(created_at: :desc).each_with_index do |event, index| %>
+          <% if index > 0 %>
+            <div class="border-t border-gray-200 pt-4"></div>
+          <% end %>
+
+          <%= render "property_events/event", event: event %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>
