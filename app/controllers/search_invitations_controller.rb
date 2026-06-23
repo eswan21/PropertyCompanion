@@ -13,9 +13,9 @@ class SearchInvitationsController < ApplicationController
       invited_user = User.find_by(email: invitation.email)
 
       if invited_user
-        SearchInvitationMailer.existing_user_invitation(invitation, invited_user).deliver_now
+        SearchInvitationMailer.existing_user_invitation(invitation, invited_user).deliver_later
       else
-        SearchInvitationMailer.new_user_invitation(invitation).deliver_now
+        SearchInvitationMailer.new_user_invitation(invitation).deliver_later
       end
 
       redirect_to @search, notice: "Invitation sent successfully."
