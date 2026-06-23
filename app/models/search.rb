@@ -5,6 +5,7 @@ class Search < ApplicationRecord
   has_many :properties, dependent: :destroy
   has_many :search_permissions, dependent: :destroy
   has_many :shared_users, through: :search_permissions, source: :user
+  has_many :search_invitations, dependent: :destroy
 
   def open_properties_count
     properties.where(open: true).count
