@@ -1,0 +1,51 @@
+<div data-filters-target="panel" class="mt-4 hidden">
+  <%= form_with url: search_path(@search), method: :get, local: true, class: "mb-6 rounded-xl border border-gray-200 bg-white p-4" do %>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <%= label_tag :status, "Status", class: "block text-sm font-medium text-gray-700" %>
+        <%= select_tag :status,
+              options_for_select([["All", ""], ["Open", "open"], ["Closed", "closed"]], params[:status]),
+              class: "mt-1 w-full rounded-md border border-gray-300 px-3 py-2" %>
+      </div>
+
+      <div>
+        <%= label_tag :min_price, "Min price", class: "block text-sm font-medium text-gray-700" %>
+        <%= number_field_tag :min_price, params[:min_price], class: "mt-1 w-full rounded-md border border-gray-300 px-3 py-2" %>
+      </div>
+
+      <div>
+        <%= label_tag :max_price, "Max price", class: "block text-sm font-medium text-gray-700" %>
+        <%= number_field_tag :max_price, params[:max_price], class: "mt-1 w-full rounded-md border border-gray-300 px-3 py-2" %>
+      </div>
+
+      <div>
+        <%= label_tag :created_from, "Added from", class: "block text-sm font-medium text-gray-700" %>
+        <%= date_field_tag :created_from, params[:created_from], class: "mt-1 w-full rounded-md border border-gray-300 px-3 py-2" %>
+      </div>
+
+      <div>
+        <%= label_tag :created_to, "Added to", class: "block text-sm font-medium text-gray-700" %>
+        <%= date_field_tag :created_to, params[:created_to], class: "mt-1 w-full rounded-md border border-gray-300 px-3 py-2" %>
+      </div>
+
+      <div>
+        <%= label_tag :note_from, "Last event from", class: "block text-sm font-medium text-gray-700" %>
+        <%= date_field_tag :event_from, params[:event_from], class: "mt-1 w-full rounded-md border border-gray-300 px-3 py-2" %>
+      </div>
+
+      <div>
+        <%= label_tag :note_to, "Last event to", class: "block text-sm font-medium text-gray-700" %>
+        <%= date_field_tag :event_to, params[:event_to], class: "mt-1 w-full rounded-md border border-gray-300 px-3 py-2" %>
+      </div>
+    </div>
+
+    <div class="mt-4 flex gap-3">
+      <%= submit_tag "Apply filters",
+            class: "rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500" %>
+
+      <%= link_to "Clear",
+            search_path(@search),
+            class: "rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
+    </div>
+  <% end %>
+</div>

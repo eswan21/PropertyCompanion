@@ -8,7 +8,10 @@ class SearchesController < ApplicationController
 
   def show
     authorize @search
-    @properties = @search.properties.by_priority
+    @properties = Properties::FilterQuery.new(
+      scope: @search.properties.by_priority,
+      params: params
+    ).call
     @property = @search.properties.build
   end
 
