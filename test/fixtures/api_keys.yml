@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+active_key:
+  name: Active key
+  token_digest: active_token_digest
+  active: true
+  last_used_at: 2026-07-29 18:04:14
+
+inactive_key:
+  name: Inactive key
+  token_digest: inactive_token_digest
+  active: false
+  last_used_at: 2026-07-29 18:04:14

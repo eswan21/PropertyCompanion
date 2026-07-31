@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   get "/avo", to: redirect("/users/sign_in")
   get "/avo/*path", to: redirect("/users/sign_in")
 
+  namespace :api do
+    get "statistics", to: "statistics#show"
+  end
+
   mount LetterOpenerWeb::Engine, at: "/letters" if Rails.env.development?
 
   root "searches#index"
