@@ -71,7 +71,7 @@ gem "devise", "~> 5.0"
 
 gem "pundit", "~> 2.5"
 
-gem "avo", "~> 3.32"
+gem "avo", "~> 4.1"
 
 group :development do
   gem "letter_opener_web"
