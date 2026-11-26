@@ -85,7 +85,7 @@ GEM
     ast (2.4.3)
     auth-sanitizer (0.2.2)
       version_gem (~> 1.1, >= 1.1.10)
-    avo (3.32.1)
+    avo (3.34.6)
       actionview (>= 6.1)
       active_link_to
       activerecord (>= 6.1)
@@ -94,7 +94,7 @@ GEM
       avo-icons (>= 0.1.2)
       docile
       meta-tags
-      pagy (>= 7.0.0, < 43)
+      pagy (>= 7.0.0)
       prop_initializer (>= 0.3.0)
       turbo-rails (>= 2.0.0)
       turbo_power (>= 0.6.0)
